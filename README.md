@@ -271,6 +271,57 @@ useradd admin -m -c "Admin" -U
 passwd admin
 ```
 Для CLI: пуск - центр управления - центр управления системой - локальные учётные записи. Комментарий - Admin; назначенные - users; группы в которые входит - Admin - применить.
+>[!NOTE]
+> - [x] **Пользователь на CLI**
+> 
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/25bc80d0-432a-43ee-b387-37ec619b2b3a)
+> - [x] **Вводим пароль "toor" и нажимаем ОК**
+>       
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/d0e27331-2955-4f3e-8a1e-f70fae15bafb)
+> - [x] **Нажимаем "Локальные учётные записи"**
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/47c0c0df-bbf0-49dd-af4d-673734d1ca9f)
+> - [x] **В качестве "Новая учётная запись" пишем "admin" -> нажимаем "Создать"**
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/2b865191-270d-4428-82a3-a6c1dd8dfd70)
+> - [x] **В комментарии пишем "Admin". Задаём пароль "P@ssword"** 
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/39e4763f-920d-4a10-9199-c21c9f2e3d1b)
+> - [x] **Нажимаем "Ctrl + Alt + T" для открытия терминала и вводим команду:**
+> **grep admin /etc/passwd**
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/5ceba8bf-99c8-454a-817c-1b3c8057c5af)
+>[!NOTE]
+> - [x] **Пользователи на BR-R-SRV и HQ-R-SRV**
+> ```
+> useradd [Имя-слитно] -m -c "[комментарий имя]" -U
+> passwd [Имя-слитно]
+> Вводим пароль: P@ssw0rd
+> ```
+>  ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/32984ac0-9ed8-430e-8864-fb2b5606886f)
+> - [x] **Проверяем пользователей: nano [имя-слитно] /etc/passwd**
+## 6. Проверка пропускной способности iperf3
+> [!TIP]
+> - [x] **Измерьте пропускную способность сети между HQ-R-ISP**
+> ```
+> systemctl enable --now iperf3
+> ```
+> - [x] **На HQ-R**
+> ```
+> iperf3 -c 192.168.0.162
+> ```
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/5aa8fc27-86ea-4ab6-8b43-4cb2b64f0571)
+> [!NOTE]
+> - [x] **Доп. инфа для iperf3**
+> 
+> при помощи параметра "--get-server-output" - можно получить более детальный результат:
+>  
+> если необходимо получить результаты сервера в выводе клиента
+> 
+> при помощи параметра "--logfile /path/to/file" - можно указать путь к файлу в который записать вывод данной каманды в качестве отчёта
+> ```
+> iperf3 -c 11.11.11.1 --get-server-output --logfile ~/iperf3_logfile.txt
+> ```
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/41af8df0-9b66-4218-8981-76cc2974d69c)
+> 
+> - [x] Содержимое получившегося файла отчёта:
+> ![image](https://github.com/KiRL132/ALT-DEMO/assets/148869565/2e28f6a4-c96e-45dc-b844-442579fc13a5)
 # 5. Измерьте пропускную способность сети между двумя узлами
 # Выполнение:
 Устанавливаю пакет:
