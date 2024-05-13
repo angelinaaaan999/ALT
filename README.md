@@ -122,6 +122,16 @@ nano /etc/net/ifaces/ens***/ipv4route
 ```
 nano /etc/net/ifaces/ens***/options
 ```
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/e73b9299-f281-4101-a401-ed4719d31689)
+HQ-R ens160 10.10.20.2/24 ens192 192.168.0.1/25
+
+BR-R ens160 10.10.30.2/24 ens192 192.168.0.129/27
+
+HQ-SRV ens160 192.168.0.2/25 route 192.168.0.1
+
+BR-SRV ens160 192.168.0.158/27 route 192.168.0.129/27
+
+
 # Поднимаем GRE-туннель средствами nmtui (бонусное задание)
 # Выполнение:
 Установление пакета
@@ -212,6 +222,8 @@ passive-interface default
  network 192.168.0.0/25 area 0
  network 10.0.0.0/30 area 0
 ```
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/4e9d3089-f63c-45e4-9124-e66d3dc08863)
+
 Просматриваю соседей:
 ```
 show ip ospf neighbor
@@ -254,6 +266,8 @@ Ctrl + x - вышел с файла
 ```
 systemctl enable --now dhcpd
 ```
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/6c4c4969-398e-4bbf-965e-312de4155c71)
+
 Проверить DHCP можно при помощи HQ-SRV, включив на нём DHCP.
 # 4. Настройте локальные учётные записи на всех устройствах
 | Учётная запись | Пароль      | Примичание     |     
@@ -358,6 +372,8 @@ ls /etc/networkbackup
 ```
 frr.conf
 ```
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/4d90a1f0-4860-49da-9038-31dac5211bbc)
+
 
 # Модуль 1 задание 7
 
