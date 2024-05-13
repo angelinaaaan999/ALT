@@ -255,8 +255,13 @@ nano /etc/dhcp/dhcpd.conf
 default-lease-time 6000;
 max-lease-time 72000;
 subnet 192.168.0.0 netmask 255.255.255.128 {
-range 192.168.0.3 192.168.0.25;
+range 192.168.0.4 192.168.0.25;
 option routers 192.168.0.1;
+}
+host HQ-SRV
+{
+hardware ethernet 00:50:56:b6:89:75;
+fixed-address 192.168.0.4;
 }
 Ctrl + s - сохранил изменения
 Ctrl + x - вышел с файла
