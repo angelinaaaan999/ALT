@@ -243,7 +243,7 @@ nano /etc/dhcp/dhcpd.conf
 default-lease-time 6000;
 max-lease-time 72000;
 subnet 192.168.0.0 netmask 255.255.255.128 {
-range 192.168.0.10 192.168.0.25;
+range 192.168.0.3 192.168.0.25;
 option routers 192.168.0.1;
 }
 Ctrl + s - сохранил изменения
@@ -336,34 +336,29 @@ systemctl enable --now iperf3
 ```
 iperf3 -c 192.168.0.162
 ```
-# 6. Составьте backup скрипты для сохранения конфигурации сетевых устройств
-# Выполнение:
-Создаю простой скрипт:
+# Модуль 1 задание 6
+
+Составьте backup скрипты для сохранения конфигурации сетевых устройств, а именно HQ-R BR-R. Продемонстрируйте их работу.
+
+Создаём папку для бэкапа:
 ```
-nano backup-script.sh
+mkdir /etc/networkbackup
 ```
-Содержимое файла:
+Заход в планировщик заданий:
 ```
-#!/bin/bash
-echo "Start backup!"
-backup_dir="/etc"
-dest_dir="/opt/backup"
-mkdir -p $dest_dir
-tar -p $dest_dir/$(hostname -s)-$(date +"%d.%m.%y").tgz $backup_dir
-echo "Done!"
+EDITOR=nano crontab -e
 ```
-Назначаю права на исполнение для данного файла:
+минута | час | день | месяц | день недели | "команда, например `reboot`":
 ```
-chmod +x backup-script.sh
+9 15 * * * cp /etc/frr/frr.conf /etc/networkbackup
 ```
-Выполняю запуск скрипта:
 ```
-./backup-script.sh
+ls /etc/networkbackup
 ```
-Посмотреть содержание архива:
 ```
-tar -tf /opt/backup/hq-r-00.00.00.tgz | less
+frr.conf
 ```
+
 # 7. Настройте подключение по SSH для удалённого конфигурирования устройства
 # Выполнение: 
 На HQ-SRV меняем порт с 22 на 2222:
@@ -412,34 +407,20 @@ ssh admin@192.168.0.161
 password
 hostname
 ```
-# 8. Настройте контроль доступа до HQ-SRV по SSH
-# Выполнение:
-Устанавливаю nftables:
+# Модуль 1 задание 8
+
+Настройте контроль доступа до HQ-SRV по SSH со всех устройств, кроме CLI.
+
+HQ-SRV:
 ```
-apt-get update && apt-get install -y nftables
+nano /etc/openssh/sshd_config
 ```
-Включаю и добавляю в автозагрузку:
+Выбор пользователей
 ```
-systemctl enable --now nftables
+AllowUsers student@192.168.0.1 student@192.168.0.140 student@192.168.0.129 student@10.10.201.174
 ```
-Добавляю правило:
-```
-nft add rule inet filter input ip saddr 192.168.0.170 tcp dport 2222 counter drop
-nft add rule inet filter input ip saddr 192.168.0.0/30 tcp dport 2222 counter drop
-```
-Проверка:
-```
-nft list ruleset
-```
-В файле /etc/nftables/nftables.nft удаляю незакомментированные строчки
-Отправляю результат:
-```
-nft list ruleset | tee -a /etc/nftables/nftables.nft
-```
-Перезапускаю:
-```
-systemctl restart nftables
-```
-Проверка заключается в том, что подключиться не получится и будет выдано сообщение: "connect to host 192.168.0.170 port 2222: Connection timed out
+
+</details>
+
 
 
