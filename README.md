@@ -359,54 +359,31 @@ ls /etc/networkbackup
 frr.conf
 ```
 
-# 7. Настройте подключение по SSH для удалённого конфигурирования устройства
-# Выполнение: 
-На HQ-SRV меняем порт с 22 на 2222:
+# Модуль 1 задание 7
+
+Настройте подключение по SSH для удалённого конфигурирования устройства HQ-SRV по порту 2222. Учтите, что вам необходимо перенаправить трафик на этот порт по средствам контролирования трафика.
+
+HQ-SRV:
 ```
-sed -i "s/#Port 22/Port 2222/g" /etc/openssh/sshd_config
+apt-get -y install openssh-server
 ```
-Перезагружаем службу sshd:
 ```
-systemctl restart sshd
+systemctl enable --now sshd
 ```
-Проверка:
 ```
-ss -tlpn | grep sshd
+nano /etc/openssh/sshd_config
 ```
-На HQ-R устанавливаем nftables:
 ```
-apt-get install -y nftables
+Port 2222
+PermitRootLogin no
+PasswordAuthentication yes
 ```
-Включаем и добавляем в автозагрузку службу nftables:
+Подключение
 ```
-systemctl enable --now nftables
+ssh student@192.168.0.40 -p 2222
 ```
-Создаём правило:
-```
-nft add table inet nat
-```
-Добавляем цепочку в таблицу:
-```
-nft add chain inet nat prerouting '{ type nat hook prerouting priority 0; }'
-```
-Добавляем ещё одно правило:
-```
-nft add rule inet nat prerouting ip daddr 192.168.0.161 tcp dport 22 dnat to 192.168.0.10:2222
-```
-Сохраняем правила:
-```
-nft list ruleset | tail -n 7 | tee -a /etc/nftables/nftables.nft
-```
-Перезапускаем службу:
-```
-systemctl restart nftables
-```
-Проверка на BR-R:
-```
-ssh admin@192.168.0.161
-password
-hostname
-```
+
+
 # Модуль 1 задание 8
 
 Настройте контроль доступа до HQ-SRV по SSH со всех устройств, кроме CLI.
