@@ -161,6 +161,9 @@ ip r add 192.168.0.128/27 dev gre1
 nmcli connection modify BR-R ip-tunnel.ttl 64
 ip r add 192.168.0.0/25 dev gre1
 ```
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/6308ae0d-d8d4-4f45-87e0-3be81f03124b)
+![image](https://github.com/angelinaaaan999/ALT/assets/148867770/b259079d-1297-4b1f-b071-47b6c8112afa)
+
 # Настройте NAT на всех маршрутизаторах (бонусное задание)
 # Выполнение:
 Устанавливаем пакет:
